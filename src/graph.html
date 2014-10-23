@@ -25,31 +25,35 @@
             };
 
             var func = function(event) {
-                var d = getData(event.data.tableid);
-                var langs = $.map(d, function(a) { return a[0]; });
-                var times = $.map(d, function(a) { return a[event.data.cnum]; });
-                //  console.log(langs);
-                //  console.log(times);
-                var data = {
-                    labels: langs,
-                    datasets: [
-                    {
-                         label: "My First dataset",
-                         fillColor: "rgba(255,254,246,0.5)",
-                         strokeColor: "rgba(255,254,246,0.8)",
-                         highlightFill: "rgba(255,254,246,0.75)",
-                         highlightStroke: "rgba(255,254,246,1)",
-                         data: times
-                    }]
-                };
-                myBarChart = new Chart(
-                    document.getElementById(event.data.graphid).getContext("2d")).Bar(data, {
-                      scaleFontColor : "#FFFEF6",
-                      scaleLineColor : "#FFFEF6",
-                      //scaleOverride : true,
-                      //scaleSteps : 15,
-                      //scaleStepWidth : 100,
-                });
+                if (this.chart) {
+                  this.chart.removeData()
+                } else {
+                  var d = getData(event.data.tableid);
+                  this.d = d.sort(function(o1,o2) {return o2[event.data.cnum] - o1[event.data.cnum];});
+                  var langs = $.map(d, function(a) { return a[0]; });
+                  var times = $.map(d, function(a) { return a[event.data.cnum]; });
+                  var data = {
+                      labels: langs,
+                      datasets: [
+                      {
+                           label: "My First dataset",
+                           fillColor: "rgba(255,254,246,0.5)",
+                           strokeColor: "rgba(255,254,246,0.8)",
+                           highlightFill: "rgba(255,254,246,0.75)",
+                           highlightStroke: "rgba(255,254,246,1)",
+                           data: times
+                      }]
+                  };
+                  this.chart = new Chart(
+                      document.getElementById(event.data.graphid).getContext("2d")).Bar(data, {
+                        scaleFontColor : "#FFFEF6",
+                        scaleLineColor : "#FFFEF6",
+                        //scaleOverride : true,
+                        //scaleSteps : 15,
+                        //scaleStepWidth : 100,
+                  });
+                }
+
             };
 
             $("#btn1").on("click", { cnum : 1, graphid: "graph1", tableid: "#CodeEval"}, func);
@@ -86,7 +90,6 @@
         <div>
           <canvas id="graph1" height="500" width="600"></canvas>
           <canvas id="graph2" height="500" width="600"></canvas>
-          <h4>※Clojureは除いています。</h4>
         </div>
     </div>
     <div>
@@ -96,7 +99,6 @@
         <div>
           <canvas id="graph3" height="500" width="600"></canvas>
         </div>
-        <h4>※PowerShellは除いています。</h4>
     </div>
     <div>
         <div>
@@ -184,13 +186,11 @@
                     <td align="right">86</td>
                     <td align="right">7004160</td>
                 </tr>
-    <!--
                 <tr>
                     <td align="center">Clojure</td>
                     <td align="right">5815</td>
                     <td align="right">66879488</td>
                 </tr>
-    -->
                 <tr>
                     <td align="center">Go</td>
                     <td align="right">29</td>
@@ -544,7 +544,6 @@
                         607
                     </td>
                 </tr>
-    <!--
                 <tr>
                     <td align="center">
                         PowerShell
@@ -553,7 +552,6 @@
                         5505
                     </td>
                 </tr>
-    -->
                 <tr>
                     <td align="center">
                         Groovy
