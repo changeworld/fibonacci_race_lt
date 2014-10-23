@@ -1,152 +1,684 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Fibonacci Race</title>
-  <script src="js/jquery-2.1.1.min.js"></script>
-<script src="js/Chart.min.js"></script>
-<script>
-  $(function() {
-  var getData =function() {
-    var data = [];
-    var tr = $("#tbl tr");
-    for( var i=1,l=tr.length;i<l;i++ ){
-      var cells = tr.eq(i).children();
-      for( var j=0,m=cells.length;j<m;j++ ){
-        if( typeof data[i-1] == "undefined" ){
-          data[i-1] = [];
-        }
-        data[i-1][j] = cells.eq(j).text();
-      }
-    }
-    return data;
-  //  console.log(data);
-  };
+    <meta charset="utf-8">
+    <title>Fibonacci Race</title>
 
-  var func = function(event) {
-    var d = getData();
-    var langs = $.map(d,function(a){return a[0];});
-    var times = event.data.flag ? $.map(d,function(a){return a[1];}) : $.map(d,function(a){return a[2];});
-  //  console.log(langs);
-  //  console.log(times);
-    var data = {
-      labels: langs,
-      datasets: [
+    <script src="js/jquery-2.1.1.min.js"></script>
+
+    <script src="js/Chart.min.js"></script>
+
+    <script>
+        $(function() {
+            var getData = function() {
+                var data = [];
+                var tr = $("#tbl tr");
+                for (var i = 1, l = tr.length; i < l; i++) {
+                    var cells = tr.eq(i).children();
+                    for (var j = 0, m = cells.length; j < m; j++) {
+                        if (typeof data[i - 1] == "undefined") {
+                            data[i - 1] = [];
+                        }
+                        data[i - 1][j] = cells.eq(j).text();
+                    }
+                }
+                return data;
+                //  console.log(data);
+            };
+
+            var func = function(event) {
+                var d = getData();
+                var langs = $.map(d, function(a) { return a[0]; });
+                var times = event.data.flag ? $.map(d, function(a) { return a[1]; }) : $.map(d, function(a) { return a[2]; });
+                //  console.log(langs);
+                //  console.log(times);
+                var data = {
+                    labels: langs,
+                    datasets: [
           {
               label: "My First dataset",
-              fillColor: "rgba(220,220,220,0.5)",
+              fillColor: "rgba(220,220,220,0.5)",              
               strokeColor: "rgba(220,220,220,0.8)",
               highlightFill: "rgba(220,220,220,0.75)",
               highlightStroke: "rgba(220,220,220,1)",
               data: times
-          }]
-    };
-    myBarChart = new Chart(
-      document.getElementById(event.data.id).getContext("2d")).Bar(data,{
-        //scaleOverride : true,
-        //scaleSteps : 15,
-        //scaleStepWidth : 100,
-    });
-  };
+}]
+                };
+                myBarChart = new Chart(
+      document.getElementById(event.data.id).getContext("2d")).Bar(data, {
+      //scaleOverride : true,
+      //scaleSteps : 15,
+      //scaleStepWidth : 100,
+  });
+            };
 
-  $("#btn3").on("click", {flag :true,id:"graph1"},  func);
-  $("#btn4").on("click", {flag :false,id:"graph2"},  func);
-});
-</script>
-  <style>
-table, td, th {
-border: 1px #000000 solid;
-}
-  </style>
-  </head>
+            $("#btn3").on("click", { flag: true, id: "graph1" }, func);
+            $("#btn4").on("click", { flag: false, id: "graph2" }, func);
+        });
+    </script>
+
+    <style>
+        table, td, th
+        {
+            border: 1px #000000 solid;
+        }
+    </style>
+</head>
 <body>
-  <input type="button" value="TIME" id="btn3"/>
-  <input type="button" value="MEMORY" id="btn4"/>
-
-  <canvas id="graph1" height="500" width="500"></canvas>
-  <canvas id="graph2" height="500" width="500"></canvas>
-  <table id="tbl">
-    <thead>
-      <tr>
-        <th align="center">Language</th>
-        <th align="right">TIME, MS</th>
-        <th align="right">MEMORY, BYTES</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td align="center">Ruby</td>
-        <td align="right">106</td>
-        <td align="right">2510848</td>
-      </tr>
-      <tr>
-        <td align="center">Scala</td>
-        <td align="right">1222</td>
-        <td align="right">1679360</td>
-      </tr>
-      <tr>
-        <td align="center">C#</td>
-        <td align="right">158</td>
-        <td align="right">4853760</td>
-      </tr>
-      <tr>
-        <td align="center">Java</td>
-        <td align="right">390</td>
-        <td align="right">3616768</td>
-      </tr>
-      <tr>
-        <td align="center">JavaScript</td>
-        <td align="right">159</td>
-        <td align="right">5439488</td>
-      </tr>
-      <tr>
-        <td align="center">Lua</td>
-        <td align="right">33</td>
-        <td align="right">4096</td>
-      </tr>
-      <tr>
-        <td align="center">Python 2</td>
-        <td align="right">149</td>
-        <td align="right">3481600</td>
-      </tr>
-      <tr>
-        <td align="center">Python 3</td>
-        <td align="right">259</td>
-        <td align="right">3866624</td>
-      </tr>
-      <tr>
-        <td align="center">Perl</td>
-        <td align="right">68</td>
-        <td align="right">1789952</td>
-      </tr>
-      <tr>
-        <td align="center">C</td>
-        <td align="right">30</td>
-        <td align="right">4096</td>
-      </tr>
-      <tr>
-        <td align="center">Bash</td>
-        <td align="right">63</td>
-        <td align="right">4096</td>
-      </tr>
-      <tr>
-        <td align="center">PHP</td>
-        <td align="right">86</td>
-        <td align="right">7004160</td>
-      </tr>
-  <!--
+    <input type="button" value="TIME" id="btn3" />
+    <input type="button" value="MEMORY" id="btn4" />
+    <canvas id="graph1" height="500" width="500"></canvas>
+    <canvas id="graph2" height="500" width="500"></canvas>
+    <h2>
+        Result(CodeEval)</h2>
+    <table id="tbl">
+        <thead>
+            <tr>
+                <th align="center">
+                    Language
+                </th>
+                <th align="right">
+                    TIME, MS
+                </th>
+                <th align="right">
+                    MEMORY, BYTES
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td align="center">
+                    Ruby
+                </td>
+                <td align="right">
+                    106
+                </td>
+                <td align="right">
+                    2510848
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Scala
+                </td>
+                <td align="right">
+                    1222
+                </td>
+                <td align="right">
+                    1679360
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    C#
+                </td>
+                <td align="right">
+                    158
+                </td>
+                <td align="right">
+                    4853760
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Java
+                </td>
+                <td align="right">
+                    390
+                </td>
+                <td align="right">
+                    3616768
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    JavaScript
+                </td>
+                <td align="right">
+                    159
+                </td>
+                <td align="right">
+                    5439488
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Lua
+                </td>
+                <td align="right">
+                    33
+                </td>
+                <td align="right">
+                    4096
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Python 2
+                </td>
+                <td align="right">
+                    149
+                </td>
+                <td align="right">
+                    3481600
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Python 3
+                </td>
+                <td align="right">
+                    259
+                </td>
+                <td align="right">
+                    3866624
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Perl
+                </td>
+                <td align="right">
+                    68
+                </td>
+                <td align="right">
+                    1789952
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    C
+                </td>
+                <td align="right">
+                    30
+                </td>
+                <td align="right">
+                    4096
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Bash
+                </td>
+                <td align="right">
+                    63
+                </td>
+                <td align="right">
+                    4096
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    PHP
+                </td>
+                <td align="right">
+                    86
+                </td>
+                <td align="right">
+                    7004160
+                </td>
+            </tr>
+            <!--
       <tr>
         <td align="center">Clojure</td>
         <td align="right">5815</td>
         <td align="right">66879488</td>
       </tr>
   -->
-      <tr>
-        <td align="center">Go</td>
-        <td align="right">29</td>
-        <td align="right">4096</td>
-      </tr>
-    </tbody>
-  </table>
-  </body>
+            <tr>
+                <td align="center">
+                    Go
+                </td>
+                <td align="right">
+                    29
+                </td>
+                <td align="right">
+                    4096
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>
+        Result(CentOS)</h2>
+    <table id="TableLinux">
+        <thead>
+            <tr>
+                <th align="center">
+                    Language
+                </th>
+                <th align="right">
+                    TIME, real
+                </th>
+                <th align="right">
+                    TIME, user
+                </th>
+                <th align="right">
+                    TIME, sys
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td align="center">
+                    OCaml
+                </td>
+                <td align="right">
+                    19
+                </td>
+                <td align="right">
+                   12
+                </td>
+                <td align="right">
+                    6
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Objective-C
+                </td>
+                <td align="right">
+                    13
+                </td>
+                <td align="right">
+                    1
+                </td>
+                <td align="right">
+                    1
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Erlang
+                </td>
+                <td align="right">
+                   178
+                </td>
+                <td align="right">
+                    157
+                </td>
+                <td align="right">
+                    15
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Ruby
+                </td>
+                <td align="right">
+                    59
+                </td>
+                <td align="right">
+                    57
+                </td>
+                <td align="right">
+                    2
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Scala
+                </td>
+                <td align="right">
+                    552
+                </td>
+                <td align="right">
+                    483
+                </td>
+                <td align="right">
+                    68
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Groovy
+                </td>
+                <td align="right">
+                    2964
+                </td>
+                <td align="right">
+                    2770
+                </td>
+                <td align="right">
+                    189
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    C
+                </td>
+                <td align="right">
+                   1
+                </td>
+                <td align="right">
+                    0
+                </td>
+                <td align="right">
+                    1
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Tcl
+                </td>
+                <td align="right">
+                    219
+                </td>
+                <td align="right">
+                    216
+                </td>
+                <td align="right">
+                    3
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    jRuby
+                </td>
+                <td align="right">
+                    1480
+                </td>
+                <td align="right">
+                    1254
+                </td>
+                <td align="right">
+                    192
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Smalltalk
+                </td>
+                <td align="right">
+                    14
+                </td>
+                <td align="right">
+                    7
+                </td>
+                <td align="right">
+                   7
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Java
+                </td>
+                <td align="right">
+                    125
+                </td>
+                <td align="right">
+                    90
+                </td>
+                <td align="right">
+                    34
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Go
+                </td>
+                <td align="right">
+                    248
+                </td>
+                <td align="right">
+                    204
+                </td>
+                <td align="right">
+                    43
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    C++
+                </td>
+                <td align="right">
+                    2
+                </td>
+                <td align="right">
+                    1
+                </td>
+                <td align="right">
+                    1
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    JavaScript
+                </td>
+                <td align="right">
+                   101
+                </td>
+                <td align="right">
+                    91
+                </td>
+                <td align="right">
+                    10
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Lua
+                </td>
+                <td align="right">
+                   8
+                </td>
+                <td align="right">
+                    7
+                </td>
+                <td align="right">
+                    1
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Python2
+                </td>
+                <td align="right">
+                   42
+                </td>
+                <td align="right">
+                    36
+                </td>
+                <td align="right">
+                    5
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Python3
+                </td>
+                <td align="right">
+                    47
+                </td>
+                <td align="right">
+                    40
+                </td>
+                <td align="right">
+                    7
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Clojure
+                </td>
+                <td align="right">
+                    3061
+                </td>
+                <td align="right">
+                    2803
+                </td>
+                <td align="right">
+                    246
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>
+        Result(WindowsServer2012R2)</h2>
+    <table id="TableWin">
+        <thead>
+            <tr>
+                <th align="center">
+                    Language
+                </th>
+                <th align="right">
+                    TIME, MS
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td align="center">
+                    F#
+                </td>
+                <td align="right">
+                    241
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    C#
+                </td>
+                <td align="right">
+                    46
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    C
+                </td>
+                <td align="right">
+                    10
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    C++
+                </td>
+                <td align="right">
+                    12
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Tcl
+                </td>
+                <td align="right">
+                    241
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    なでしこ
+                </td>
+                <td align="right">
+                    607
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    PowerShell
+                </td>
+                <td align="right">
+                    5505
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Groovy
+                </td>
+                <td align="right">
+                    498
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    jRuby
+                </td>
+                <td align="right">
+                    852
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Haskell
+                </td>
+                <td align="right">
+                    26
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    MS-DOSコマンドライン
+                </td>
+                <td align="right">
+                    110
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Java
+                </td>
+                <td align="right">
+                    245
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Go
+                </td>
+                <td align="right">
+                    773
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    JavaScript
+                </td>
+                <td align="right">
+                    197
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Lua
+                </td>
+                <td align="right">
+                    60
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Python2
+                </td>
+                <td align="right">
+                    89
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Python3
+                </td>
+                <td align="right">
+                    143
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    Clojure
+                </td>
+                <td align="right">
+                    514
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ul class="task-list">
+        <li>ひまわりはコンソールに表示する方法がない？ため計測不能。</li>
+        <li>プロデルは「コンソール版の実行可能ファイル」がエラーで作成できなかったため計測不能。
+            <ul class="task-list">
+                <li>環境依存か？</li>
+            </ul>
+        </li>
+    </ul>
+</body>
 </html>
